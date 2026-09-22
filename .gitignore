@@ -1,0 +1,12 @@
+# 作業ログ・スクリーンショット（公開しない）
+chatlog_*.json
+*.jpg
+*.png
+# 秘密情報
+.env
+*.key
+local.settings.json
+# OS・エディター
+.DS_Store
+Thumbs.db
+.vscode/

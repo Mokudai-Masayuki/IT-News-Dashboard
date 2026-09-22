@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>朝の発見</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true">
+    <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></symbol>
+    <symbol id="bookmark" viewBox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="undo" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2.7 6.4M3 3v8h8"/></symbol>
+    <symbol id="left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7m-7 7h14"/></symbol>
+    <symbol id="right" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><path d="m20 6-11 11-5-5"/></symbol>
+    <symbol id="close" viewBox="0 0 24 24"><path d="m18 6-12 12M6 6l12 12"/></symbol>
+    <symbol id="external" viewBox="0 0 24 24"><path d="M15 3h6v6m-11 5L21 3m-3 10v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  </svg>
+  <div class="shell">
+    <header>
+      <svg class="icon brand-mark" aria-hidden="true"><use href="#sun"/></svg>
+      <div class="brand"><h1>朝の発見</h1><p class="eyebrow">ひとつ、気になる朝。</p></div>
+      <button id="undo-button" class="icon-button" title="ひとつ戻す" aria-label="ひとつ戻す" disabled><svg class="icon" aria-hidden="true"><use href="#undo"/></svg></button>
+    </header>
+    <main>
+      <section id="today-view" aria-label="今日の発見">
+        <div id="reading">
+          <div class="article-content">
+          <div class="session-heading"><span id="position"></span><div id="progress" class="progress" aria-hidden="true"></div></div>
+          <div class="article-stage">
+            <div id="swipe-label" class="swipe-label" aria-hidden="true"></div>
+            <article id="article" aria-labelledby="article-title">
+              <div class="source-line"><span class="source-dot"></span><span id="article-source"></span><time id="article-date"></time></div>
+              <h2 id="article-title"></h2>
+              <p id="article-summary"></p>
+            </article>
+          </div>
+          <div class="article-footer"><span class="sample-label">サンプル記事</span><button id="detail-button" class="text-button">記事の詳細</button></div>
+          </div>
+          <div class="actions">
+            <button id="save-button" class="primary"><svg class="icon" aria-hidden="true"><use id="save-icon" href="#bookmark"/></svg><span id="save-label">後で読む</span></button>
+          </div>
+        </div>
+        <div id="ending" class="end" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#sun"/></svg>
+          <h2>今日はここまで</h2><p>気になる発見は、また別の朝に。</p>
+          <button id="next-button" class="secondary">次の5件を見る<svg class="icon" aria-hidden="true"><use href="#right"/></svg></button>
+          <p id="end-note" class="quota"></p>
+        </div>
+      </section>
+      <section id="saved-view" aria-labelledby="saved-title" hidden>
+        <h2 id="saved-title" class="section-title">後で読む</h2><p id="saved-count" class="section-count"></p><ul id="saved-list" class="article-list"></ul>
+      </section>
+      <section id="search-view" aria-labelledby="search-title" hidden>
+        <h2 id="search-title" class="section-title">発見を探す</h2>
+        <div class="search-field"><svg class="icon" aria-hidden="true"><use href="#search"/></svg><input id="search-input" type="search" placeholder="タイトル・情報源・メモ" aria-label="保存・リアクション済みの記事を検索" autocomplete="off"></div>
+        <p id="search-count" class="section-count" aria-live="polite"></p><ul id="search-list" class="article-list"></ul>
+      </section>
+    </main>
+    <nav aria-label="メインナビゲーション">
+      <button data-view="today" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#sun"/></svg>今日</button>
+      <button data-view="saved"><svg class="icon" aria-hidden="true"><use href="#bookmark"/></svg>保存</button>
+      <button data-view="search"><svg class="icon" aria-hidden="true"><use href="#search"/></svg>検索</button>
+    </nav>
+  </div>
+  <dialog id="detail-dialog" aria-labelledby="detail-title">
+    <div class="dialog-top"><p>サンプル記事</p><button id="close-detail" class="icon-button" aria-label="閉じる" title="閉じる"><svg class="icon" aria-hidden="true"><use href="#close"/></svg></button></div>
+    <h2 id="detail-title"></h2><p id="detail-original" class="original"></p><p id="detail-date"></p><p id="detail-summary"></p><p id="detail-state"></p>
+    <a id="detail-link" target="_blank" rel="noopener noreferrer">関連する公式情報<svg class="icon" aria-hidden="true"><use href="#external"/></svg></a>
+    <form id="memo-form" class="memo-area" hidden><label for="memo">メモ（任意）</label><textarea id="memo" maxlength="1000"></textarea><button class="secondary" type="submit">メモを保存</button></form>
+  </dialog>
+  <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+  <script src="data-source.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
